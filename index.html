@@ -3,40 +3,88 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>J.A.R.V.I.S. - GLOBAL SCAN</title>
+<title>J.A.R.V.I.S. GLOBAL v6 - PRO</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
   body{margin:0;background:#020a12;overflow:hidden;font-family:'Share Tech Mono',monospace;color:#7afcff}
   #globe{position:absolute;top:0;left:0;width:100%;height:100%}
-  .hud{position:absolute;z-index:2;pointer-events:none;border:1px solid #00e5ff55;background:rgba(0,20,40,0.45);backdrop-filter:blur(4px);border-radius:8px;box-shadow:0 0 15px #00e5ff33}
-  #top{top:0;left:0;right:0;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-radius:0}
-  #top b{font-size:28px;letter-spacing:3px;color:#aaffff;text-shadow:0 0 10px #00ffff}
-  #left{left:20px;top:100px;width:210px;padding:15px}
-  #right{right:20px;top:100px;width:240px;padding:15px}
-  #bottom{bottom:15px;left:20px;right:20px;height:55px;display:flex;align-items:center;justify-content:space-between;padding:0 15px;border-radius:10px}
-  .label{font-size:11px;opacity:0.7} .val{font-size:13px;color:#fff;margin:4px 0 10px 0}
-  .green{color:#00ff88;border:1px solid #00ff88;padding:6px 10px;border-radius:4px;margin-top:10px;font-size:12px}
-  .scan{width:90px;height:90px;border:2px solid #00ffff;border-radius:50%;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-  .scan::before{content:'';position:absolute;top:50%;left:50%;width:50%;height:2px;background:linear-gradient(90deg,#00ffff,transparent);transform-origin:left;animation:spin 1.5s linear infinite}
-  .scan::after{content:'';position:absolute;width:8px;height:8px;background:#00ff88;border-radius:50%;box-shadow:0 0 10px #00ff88;animation:blink 1s infinite}
-  @keyframes spin{to{transform:rotate(360deg)}} @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+  .hud{position:absolute;z-index:2;border:1px solid #00e5ff55;background:rgba(0,20,40,0.6);backdrop-filter:blur(6px);border-radius:10px;box-shadow:0 0 20px #00e5ff33;padding:12px}
+  #top{top:0;left:0;right:0;height:75px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-radius:0}
+  #left{left:15px;top:90px;width:230px} #right{right:15px;top:90px;width:250px}
+  #bottom{bottom:15px;left:15px;right:15px;height:70px;display:flex;align-items:center;justify-content:space-around}
+  b{color:#fff} .label{font-size:10px;opacity:0.6;margin-top:6px} .val{font-size:13px;color:#fff}
+  .tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;margin:2px}
+  .scan{width:90px;height:90px;border:2px solid #00ffff;border-radius:50%;margin:0 auto;position:relative;display:flex;align-items:center;justify-content:center}
+  .scan::before{content:'';position:absolute;top:50%;left:50%;width:50%;height:2px;background:#00ffff;transform-origin:left;animation:spin 1.2s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 <script src="//unpkg.com/globe.gl"></script>
 </head>
 <body>
 <div id="globe"></div>
-<div id="top" class="hud"><b>J.A.R.V.I.S.</b><div style="text-align:center"><div style="color:#00ff88">ONLINE</div>GLOBAL SCAN<br>EARTH HOLOGRAPHIC</div><div>2026.09.02 • UTC</div></div>
-<div id="left" class="hud"><div class="scan">REC</div><div style="text-align:center;margin-top:10px;font-size:12px">SURVEILLANCE</div><div class="label">ATMOSPHERE: STABLE</div><div class="label">OCEANIC: +1.2MM</div><div class="label">POPULATION: 8.12B</div><div class="green">THREAT ANALYSIS → NONE DETECTED</div></div>
-<div id="right" class="hud"><b>GEO DATA</b><div class="label">LAT: 28.4595°N | LON: 77.0266°E</div><div class="val">GRAVITY: 9.807 m/s²</div><b>ORBITAL SATS: 128</b><br><div style="text-align:center;margin:10px 0">🛰️ GURUGRAM ACTIVE</div><div class="label">ENERGY GRID: 98%</div><div style="height:6px;background:#00ffff33;border-radius:3px"><div style="width:98%;height:100%;background:#00ffff"></div></div></div>
-<div id="bottom" class="hud"><div>STATUS: NOMINAL</div><div>SCANNING... TERRAIN | CLIMATE | NETWORK</div><div>CPU: 22% | NETWORK: SECURE</div></div>
+
+<div id="top" class="hud">
+  <div><b style="font-size:26px">J.A.R.V.I.S.</b><br><span style="color:#00ff88">● ONLINE • GLOBAL SCAN v6 PRO</span></div>
+  <div style="text-align:center"><b>EARTH HOLOGRAPHIC PROJECTION</b><br>FLIGHTS: <span id="flightCount">42</span> LIVE | SATS: 128 | AQI MONITORING: ON</div>
+  <div id="clock">--:--:-- UTC</div>
+</div>
+
+<div id="left" class="hud">
+  <div class="scan">LIVE</div>
+  <div class="label">LIVE FLIGHTS TRACKING</div>
+  <div class="val"><span class="tag" style="background:#00ffff33">DEL→NYC 12</span><span class="tag" style="background:#ff005533">DEL→LON 8</span><span class="tag" style="background:#00ff8833">GGN→DXB 22</span></div>
+  <div class="label">WEATHER - GURUGRAM</div>
+  <div class="val">🌡️ 32°C | 💧 65% | 🌬️ 12 km/h<br>CONDITION: HAZE</div>
+  <div class="label">AIR QUALITY INDEX</div>
+  <div class="val">AQI: <span style="color:#ffaa00">184 - Moderate</span><br>PM2.5: 89 | PM10: 142</div>
+</div>
+
+<div id="right" class="hud">
+  <b>🌍 GEO INTELLIGENCE</b>
+  <div class="label">PRIMARY NODE</div><div class="val">GURUGRAM [28.4595°N, 77.0266°E]</div>
+  <div class="label">GLOBAL CONNECTIONS</div><div class="val">6 CONTINENTS | 12 HUBS<br>ACTIVE ARCS: <span style="color:#00ffff">42</span></div>
+  <div class="label">POPULATION HEATMAP</div><div class="val">INDIA: 1.44B | WORLD: 8.12B<br>DENSITY: HIGH [GGN]</div>
+  <div class="label">SYSTEM LOAD</div>
+  <div style="height:6px;background:#003344;border-radius:3px;margin:5px 0"><div style="width:78%;height:100%;background:linear-gradient(90deg,#00ffff,#00ff88)"></div></div>
+  <div class="label">THREAT LEVEL: <span style="color:#00ff88">LOW</span> | SECURITY: ENCRYPTED</div>
+</div>
+
+<div id="bottom" class="hud">
+  <div><b>✈️ FLIGHT:</b> AI-101 DEL→JFK | ALT 38k ft</div>
+  <div><b>🛰️ SAT:</b> ISS TRACKING • LAT 28.5°</div>
+  <div><b>🌫️ POLLUTION:</b> GGN HOTSPOT DETECTED</div>
+  <div><b>📡 NETWORK:</b> SECURE • 42ms</div>
+</div>
+
 <script>
+setInterval(()=>{document.getElementById('clock').innerText=new Date().toUTCString().slice(17,25)+' UTC'},1000);
+
+const GURU = {lat:28.4595,lng:77.0266};
+const HUBS = [
+  {lat:40.7128,lng:-74.006,name:'NEW YORK',aql:45},{lat:51.5074,lng:-0.1278,name:'LONDON',aql:62},
+  {lat:25.2048,lng:55.2708,name:'DUBAI',aql:110},{lat:35.6762,lng:139.65,name:'TOKYO',aql:38},
+  {lat:1.3521,lng:103.8198,name:'SINGAPORE',aql:55},{lat:-33.8688,lng:151.2093,name:'SYDNEY',aql:30},
+  {lat:28.6139,lng:77.2090,name:'DELHI',aql:184},{lat:19.0760,lng:72.8777,name:'MUMBAI',aql:165}
+];
+
+// Flight arcs
+const arcs = HUBS.map(h=>({startLat:GURU.lat,startLng:GURU.lng,endLat:h.lat,endLng:h.lng,color:['#00ffff','#ffffff']}));
+// Pollution points - red for high AQI
+const points = HUBS.map(h=>({...h,color: h.aql>150 ? '#ff4444' : h.aql>80 ? '#ffaa00' : '#00ff88', size: h.aql/100 }));
+
 const globe = Globe()(document.getElementById('globe'))
  .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
- .backgroundColor('#020a12').showAtmosphere(true).atmosphereColor('#00ffff').atmosphereAltitude(0.35)
- .pointsData([{lat:28.4595,lng:77.0266}]).pointColor(()=>'#00ffff').pointAltitude(0.3).pointRadius(1.2)
- .ringsData([{lat:28.4595,lng:77.0266}]).ringColor(()=>'#00ffff').ringMaxRadius(10).ringPropagationSpeed(5).ringRepeatPeriod(700);
-globe.controls().autoRotate=true;globe.controls().autoRotateSpeed=0.8;
-globe.pointOfView({lat:20,lng:77,altitude:1.6});
+ .backgroundColor('#020a12').showAtmosphere(true).atmosphereColor('#00ffff').atmosphereAltitude(0.4)
+ .arcsData(arcs).arcColor('color').arcDashLength(0.6).arcDashGap(0.2).arcDashAnimateTime(1500).arcStroke(0.8)
+ .pointsData(points).pointColor('color').pointAltitude(d=>d.size*0.3).pointRadius(d=>d.size*0.6)
+ .labelsData(HUBS).labelText(d=>`${d.name} AQI:${d.aql}`).labelSize(1).labelColor(d=>d.color)
+ .ringsData([GURU]).ringColor(()=> '#00ffff').ringMaxRadius(12).ringPropagationSpeed(3).ringRepeatPeriod(800);
+
+globe.controls().autoRotate=true;globe.controls().autoRotateSpeed=0.6;
+globe.pointOfView({lat:25,lng:77,altitude:1.7});
+
+// Fake live flight counter
+let c=42; setInterval(()=>{c+=Math.floor(Math.random()*3)-1; document.getElementById('flightCount').innerText=c;},2000);
 </script>
 </body>
 </html>
