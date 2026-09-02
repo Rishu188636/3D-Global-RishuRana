@@ -1,33 +1,55 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>3D-Global-RishuRana - PRO</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>3D-Global-RishuRana PRO</title>
 <style>
  html,body{margin:0;height:100%;background:#000;overflow:hidden}
- #top{
-  position:absolute;left:15px;top:15px;z-index:10;color:#fff;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(90deg, #000a, #001a2a);
-  padding:14px 18px;border-radius:14px;border:1px solid #00ffff88;
-  box-shadow:0 0 20px #00ffff55;
- }
- #top b{color:#00ffff;letter-spacing:1px}
- #top small{opacity:.7}
+ #top{position:absolute;left:15px;top:15px;z-index:10;color:#fff;font-family:sans-serif;background:#000c;padding:14px 18px;border-radius:14px;border:1px solid #00ffff88;box-shadow:0 0 20px #00ffff55}
+ #top b{color:#00ffff}
 </style>
-<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
-<script src="https://unpkg.com/globe.gl@2.32.0/dist/globe.gl.min.js"></script>
+<script type="importmap">
+{
+ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+  "globe.gl": "https://cdn.jsdelivr.net/npm/globe.gl@2.32.0/+esm"
+ }
+}
+</script>
 </head>
 <body>
-<div id="top">
- <b>🌍 3D-GLOBAL-RISHU RANA</b><br>
- <small>PRO EDITION | Three.js + Globe.GL | LIVE: Gurugram, India</small><br>
- <small style="color:#00ff88">● LIVE TRACKING • 7 SATELLITE LINKS ACTIVE</small>
-</div>
-<div id="globe"></div>
-<script>
-const GURUGRAM = {lat:28.4595,lng:77.0266};
-const cities = [
- {lat:28.6139,lng:77.2090, name:"DELHI", color:"#00ffff"},
- {lat:19.0760,lng:72.8777, name:"MUMBAI", color:"#ff005
+<div id="top"><b>🌍 3D-GLOBAL-RISHU RANA</b><br><small>PRO EDITION | LIVE: Gurugram | 7 SATELLITE LINKS ACTIVE</small></div>
+<div id="globe" style="width:100%;height:100%"></div>
+<script type="module">
+import Globe from 'globe.gl';
+
+const GURUGRAM={lat:28.4595,lng:77.0266};
+const cities=[
+ {lat:28.6139,lng:77.2090,name:"DELHI"},
+ {lat:19.0760,lng:72.8777,name:"MUMBAI"},
+ {lat:51.5074,lng:-0.1278,name:"LONDON"},
+ {lat:40.7128,lng:-74.0060,name:"NEW YORK"},
+ {lat:35.6762,lng:139.6503,name:"TOKYO"},
+ {lat:1.3521,lng:103.8198,name:"SINGAPORE"},
+ {lat:-33.8688,lng:151.2093,name:"SYDNEY"},
+];
+const arcs=cities.map(c=>({startLat:GURUGRAM.lat,startLng:GURUGRAM.lng,endLat:c.lat,endLng:c.lng}));
+const labels=[{lat:GURUGRAM.lat,lng:GURUGRAM.lng,name:"📍 GURUGRAM - YOU"},...cities.map(c=>({lat:c.lat,lng:c.lng,name:c.name}))];
+
+const globe=Globe()(document.getElementById('globe'))
+ .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+ .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+ .labelsData(labels).labelText('name').labelSize(d=>d.name.includes('GURUGRAM')?1.8:1).labelColor(()=> '#00ffff').labelDotRadius(0.5)
+ .pointsData([{lat:GURUGRAM.lat,lng:GURUGRAM.lng},...cities]).pointColor(()=> 'cyan').pointAltitude(0.08).pointRadius(0.6)
+ .arcsData(arcs).arcColor(()=>'#00ffff').arcDashLength(0.5).arcDashGap(0.2).arcDashAnimateTime(1500).arcStroke(1)
+ .ringsData([{lat:GURUGRAM.lat,lng:GURUGRAM.lng}]).ringColor(()=>'#00ffff').ringMaxRadius(5).ringPropagationSpeed(3).ringRepeatPeriod(1200)
+ .atmosphereColor('#00aaff').atmosphereAltitude(0.3);
+
+globe.controls().autoRotate=true;
+globe.controls().autoRotateSpeed=0.8;
+globe.pointOfView({lat:28.4,lng:77,altitude:2});
+</script>
+</body>
+</html>
